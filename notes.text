@@ -1,0 +1,195 @@
+
+
+How to deploy a web application to Heroku:
+https://teamtreehouse.com/library/deploy-a-node-application-to-heroku
+
+
+ 
+How to begin an express project through the terminal:
+
+	1. create directory: mkdir 'name you want to call new directory'
+	2. change to that directory: cd 'name you just created'/
+	3. initiat npm in the directory: npm init -y (writes a json package)
+	4. install express: npm install express@'version you'd like to install' --save (ie npm install express@4.16.0 --save)
+			*** running npm install express --save automically installs the latest stable version ***
+	5. create new files: touch 'filename' (ie touch app.js)
+	6. install nodemon in same directory: npm install -g nodemon
+
+
+
+					NODEMON
+			1. Navigate to your directory and then run command nodemon app.js from the directory
+			2. It doesn't seem to work correctly if you type in a longer file path
+
+
+
+// Routing basic information
+//		1. from app perspective - a route (aka endpoint) is a command to run specific function
+//		2. this function sends a response back to a client
+//		3. REQUEST --
+//			GET request (http verb) client ask server for something the URL (resource) tells the server what to get for client
+//			POST request (ie client sends values of form to a server for the server to then process that data)
+//			*** When route/endpoint doesn't exist, server sends back a 404 error code
+
+// NODEMON *** using nodemon is etremely useful because it moniters any changes in source and automatically restarts server. This is useful because you don't have to constantly start and restart your server each time you want to see changes that you've made. Instead of running the 'node command' (ie node app.js), run nodemon (ie nodemon app.js)
+//		****** MAKE SURE THAT THE PACKAGE.JSON FILE HAS MAIN SET TO THE FILE THAT YOU WANT TO RUN (for this project I changed main from 'index.js' to 'app.js')
+
+// TEMPLATE RENDERING
+//		1. you can send html more easily than through a string by using templates
+//		2. templates live on the server and access some sort of form letter for your html (like it has blanks that you can fill in depending on your needs)
+//		3. the result is full html view sent to client
+//		4. this whole thing is reffered to as rendering a template
+//		5. templates are often referred to as views
+//			*** this course will use PUG -- once I am finished, it might be a cool project to go back and try and
+//				use handelbars in it's stead to get a better grasp on both handlebars and PUG and templating in general
+
+// WHAT IS PUG ?
+//
+// example of how it works: 
+//		pug - h1 I love treehouse
+//		html - <h1>I love treehouse</h1>
+// nesting: (just indent with pug)
+//		pug - ul
+//				li red
+//				li green
+//				li blue
+//
+//		html - <ul>
+//				<li>red</li>
+//				<li>green</li>
+//				<li>blue</li>
+//			   </ul>
+//
+//
+// you can add a class in pug with dot notation (just like css)
+//		ie div.wrapper = div(class='wrapper')
+// same for id, use a hash symbol
+//		ie p#mainContent Hi! = p(id='mainContent') Hi!
+//
+// pug has shortcut to write divs -- just type class name or id and pug will assume it will be linked to a div
+//		ie .wrapper = div.wrapper
+//		ie #mainContent Hi! = div#mainContent Hi!
+//
+//	you can inject variables into pug by using an equals sign directly after tag, adding a space and then putting in variable name
+//		*** ie h1= prompt
+//
+// interpolate with pug
+//		1. use hash symbol with curly brackets surrounding variable name ( ie h1 My name is #{name} ) = <h1>My name is Matt</h1>
+// 
+// USING CONDITIONALS WITH PUG
+//		1. just nest an if statement or whatever else is available to pug
+//				 	ie	section#content
+//							h2= prompt
+//							if hint
+//								p
+//									i Hint: #{hint})
+//
+// HOW TO USE PUG IN AN EXPRESS APP
+//		1. download pug with npm
+//		2. update code in app to use pug
+//		3. create templates
+//		4. render templates with response.render()
+//
+//
+//			*** pug automatically grabs files from views folder. if you want to change it's name or nest the folder, you
+//				will need to change the pug settings to look somewhere else for the views
+//
+//			*** call the home route index.pug
+
+
+
+
+			MIDDLE WARE (in this case: body-parser)
+				*** https://github.com/expressjs/body-parser ***
+
+	1. we'll need to install middleware to help some of the request/response methods
+	2. install body-parser:
+		- cd 'project filename'    (ie cd flashcards)
+		- npm install body-parser --save 
+	3. require body-parser in app.js file at the top (id const bodyParser = require('body-parser');)
+	4. tell express to use it
+
+
+SENDING FORM DATA
+https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Sending_and_retrieving_form_data
+
+HTML FORMS
+https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms
+
+
+
+											HTTP
+
+	1. HTTP is a stateless protocol -- meaning that the server doesn't track the difference between one request or another
+										each transaction with server is independant and unrelated (at least from the
+										perspective of the server)
+
+										- example: forms don't retain state/information that was inputed on reload/refresh
+
+	2. A client needs to send complete sets of information to the server each time that it makes a request
+
+	3. It is possible to remember a state and come back to it later
+
+		- Cookies can be used to accomplish this. ***A cookie is a piece of data that the server stores on the client (in your web browser for example)***
+
+		- When client makes another/new request from server, client sends the cookie info too
+			*** it will even send other cookies that have been set ***
+
+		- Cookies are stored in browser by domain which means that domains cannot access cookies set by other domains
+
+
+
+
+							SAVING STATES (Alternatives to cookies)
+
+
+			1. Using Local Storage with JavaScript (Treehouse workshop) : https://teamtreehouse.com/library/using-local-storage-with-javascript
+
+			2. Using SQL and Node.js with Sequelize (Treehouse workshop) : https://teamtreehouse.com/library/using-sql-and-nodejs-with-sequelize
+
+			3. SQL Basics (Treehouse Course) : https://teamtreehouse.com/library/sql-basics
+
+			4. Mongo Basics (Treehouse Course) : https://teamtreehouse.com/library/mongo-basics
+
+
+
+							ERROR MIDDLEWARE
+
+			*** standard middleware: (req, res, next) => {}
+
+			*** error middleware: (err, req, res, next) => {}
+
+			1. when error occurs, express automatically looks for the first middleware with four parameters
+
+			2. if there isn't one that we've added, then it uses it's own native handler in its code base
+
+			3. we can override this by creating our own custom error handler (can serve a custom error template
+			   to the client)
+
+
+			   				QUERY STRING
+
+			1. examples: url/something/?key=value  url/something/?key=value&key2=value2
+
+			2. a way to pass in values to a server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

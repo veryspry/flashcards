@@ -1,0 +1,42 @@
+@font-face {
+	font-family: DeliciousRoman;
+	src: url(/Delicious-Roman.otf);
+}
+
+body {
+	background-color: #ff968f;
+}
+
+
+#cardStyle {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #d5fffa;
+	box-shadow: 2px 2px .5px #fe7e75;
+	background-color: #fe7e75;
+	padding: 15px;
+	display: inline-block;
+	text-align: center;
+	height: 20em;
+	width: 50%;
+
+}
+
+
+#section {
+
+}
+
+
+
+h1  {
+	color: ;
+} 
+
+h2  {
+	color: ;
+} 
+
+h3  {
+	color: ;
+} 

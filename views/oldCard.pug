@@ -1,0 +1,32 @@
+extends layout.pug
+
+block content
+	div#cardStyle 
+		section#content
+			h2= text
+				if hint
+					p
+						i Hint: #{hint}
+			
+			form(action=`${id}`, method='get')
+				input(type='hidden' name='side' value=`${sideToShow}`)
+				button(type='submit') Flip
+
+			if next
+				
+				form(action=`${id+1}`, method='get')
+					input(type='hidden' name='side' value='question')
+					button(type='submit') Next Card
+
+			if previous
+
+				form(action=`${id-1}`, method='get')
+					input(type='hidden' name='side' value='question')
+					button(type='submit') Previous Card
+
+			form(action=`/cards`, method='get')
+				input(type='hidden' name='' value='')
+				button(type='submit') Random Card
+
+			form(action='/', method='get')
+				button(type="submit") Home Page
